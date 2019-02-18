@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Velib</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+        <!-- Css -->
+        <link rel="stylesheet" href="velib.css" />
+
+        <!-- Font awesome -->
+        <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css" />
+
+        <!-- Bibliothèque  JQuery-->
+        <script src="jquery-3.2.1.js"></script>
+
+        <!-- Ajax -->
+        <script src="ajax.js"></script>
+
+        <!-- Google Maps -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsmWzsJeFVJ2X8YgOMlhFSv55mWL6zedw&callback=initMap" async defer></script>
+        <script type="text/javascript" src="map_google.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1><img src="images/velib.png" alt="velib"/></h1>
+            <div id="conteneurSliders">
+                <div id="sliders">
+                    <div id="image1" class="image">
+                        <div id="conteneur_text">
+                            <div class="text">
+                                <h1>Bienvenue sur Velib</h1>
+                                <p class="text_aide">
+                                    Votre velib en un clic <i class="fa fa-hand-pointer-o" aria-hidden="true"></i><br />
+                                    Faite défiler le slider pour suivre les instructions de <span id="reservation">réservation</span><br />
+                                </p>
+                                <img id="velo1" src="images/velo1.png" alt="velo"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="image2" class="image">
+                            <div id="text1">
+                                <div>
+                                    <p id="select_carte">Sélectionnez votre station sur la carte <i class="fa fa-map-o" aria-hidden="true"></i></p>
+                                    <p class="text_aide">Pour vous aider nous avons 3 types de stations :</p>
+                                </div>
+                            </div>
+                            <div id="station_aide">
+                                <div id="station_bleu">
+                                    <img src="icon-map/cyclingblue.png" alt="icone_velib" /><br />
+                                    Les stations bleus sont ouvertes et velib disponible
+                                </div>
+                                <div id="station_orange">
+                                    <img src="icon-map/cyclingorange.png" alt="icone_velib" /><br />
+                                    Les stations oranges sont ouvertes mais velib indisponible
+                                </div>
+                                <div id="station_rouge">
+                                    <img src="icon-map/cyclingred.png" alt="icone_velib" /><br />
+                                    Les stations rouge sont fermées
+                                </div>
+                            </div>
+                    </div>
+                    <div id="image3" class="image">
+                        <div id="text2">
+                            <div>
+                                <p id="signer">Signez pour réserver votre velib <i class="fa fa-pencil-square-o" aria-hidden="true"></i></p>
+                                <div id="signature_slider">
+                                    <p id="signature_aide">
+                                        Votre signature<br />
+                                        <img src="images/signature.png" alt="logo_signature" />
+                                    </p>
+                                </div>
+                                <div id="bouton_aide">
+                                    <p><span id="boutonReserverSlider">Réserver</span></p>
+                                    <p><span id="boutonEffacerSlider">Effacer la signature</span></p>
+                                </div>
+                                <p class="text_aide">Une fois la signature effectuée , cliquez sur le bouton <span id="reserver_aide">réserver</span> <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></p>
+                            </div>
+                        </div>
+                        <img id="velo2" src="images/velo1.png" alt="velo"/>
+                    </div>
+                    <div id="image4" class="image">
+                        <div id="text3">
+                            <div>
+                                <p id="titre_aide">Et voilà votre velib est réserver bravo <i class="fa fa-bicycle fa-velo" aria-hidden="true"></i></p>
+                                <p class="text_aide">Il sera disponible pour une durée de 2O minutes et au delà de ce délai la réservation sera <span id="expiree_aide">expirée</span><i class="fa fa-clock-o" aria-hidden="true"></i></p>
+                            </div>
+                        </div>
+                        <img id="mongo" src="images/mongo.png" alt="logo_montgolfière"/>
+                    </div>
+                </div>
+                <div id="sliders-pagination">
+                    <div id="bouton1" class="bouton"></div>
+                    <div id="bouton2" class="bouton"></div>
+                    <div id="bouton3" class="bouton"></div>
+                    <div id="bouton4" class="bouton"></div>
+                </div>
+                <div id="sliders-boutons">
+                    <div id="bouton-gauche" class="fleche">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    </div>
+                    <div id="bouton-droit" class="fleche">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div id="conteneurSection">
+                <div id="map"></div>
+                <fieldset>
+                    <legend>Détails de la station</legend>
+                    <ul class="fa-ul">
+                        <li><i class="fa-li fa fa-map-marker"></i>Station : <span id="stationSelect"></span></li>
+                        <li><i class="fa-li fa fa-info"></i>Statut : <span id="statutSelect"></span></li>
+                        <li><i class="fa-li fa fa-map-o"></i>Adresse : <span id="addressSelect"></li>
+                        <li><i class="fa-li fa fa-inbox"></i>Places : <span id="placeSelect"></span></li>
+                        <li><i class="fa-li fa fa-bicycle"></i>Vélos disponibles : <span id="veloSelect"></span></li>
+                    </ul>
+                    <div id="conteneur_signature">
+                        <div id="infos_signature">Votre signature est nécessaire ICI pour réserver un vélib :</div>
+                        <div id="signature">
+                            <canvas id="canvas" width="300" height="150"></canvas><br />
+                        </div>
+                        <div id="conteneurBouton">
+                            <p id="boutonReserver">Réserver</p>
+                            <p id="boutonEffacer">Effacer la signature</p>
+                        </div>
+                    </div>
+                    <div id="aide">Veuillez selectionner une station sur la carte.</div>
+                </fieldset>
+            </div>
+        </section>
+        <section id="conteneur_compteur">
+            <p id="infos_reservation">Information sur la réservation :</p>
+            <p id="infos_encours">Aucune réservation en cours</p>
+            <p id="compteur">Vous avez reservé 1 vélo à la station <span id="station"></span> pour une durée de <span id="temps"></span>.</p>
+            <p id="boutonAnnuler">Annuler la réserver</p>
+        </section>
+        <footer>
+            <p id="droit">
+                Tous droits réservés à Pascal Nguyen.<br />
+                Il est strictement interdit de copier et de distribuer le contenu de ce site sans l'accord de son propriétaire.
+            </p>
+        </footer>
+
+        <!-- Slider JS-->
+        <script src="sliders.js"></script>
+
+        <!-- Canvas JS -->
+        <script src="canvas.js"></script>
+
+        <!-- Compteur -->
+        <script src="compteur.js"></script>
+    </body>
+</html>
